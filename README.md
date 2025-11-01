@@ -1,3 +1,4 @@
 # ARDA-GENCER-DSA210-TERM-PROJECT
-
-In this project, the effect of walkability index for each US county to various health conditions such as obesity rates and cardiovascular disease mortality that is observed in that division will be investigated. The data will be collected from the data.gov website.
+This is my term project for DSA210 course, in Fall 2025 term.
+#Project Proposal
+In this project, I will compare the effect of walkability index, a crucial factor when determining how easy it is for a person to be phsically active in their daily lives, and several health problems that is correlated with sedentary lifestyle, such as obesity and cardiovascular diseases.
