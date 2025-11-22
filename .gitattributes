@@ -1,0 +1,2 @@
+StateAndCountyData.csv filter=lfs diff=lfs merge=lfs -text
+VariableList.csv filter=lfs diff=lfs merge=lfs -text
