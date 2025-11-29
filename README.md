@@ -8,7 +8,16 @@ Ever since I decided living a healthier lifestyle and changing my habits accordi
 My plan is to compare the walkability index data,  that is determined by the characteristics of the environment which would enable a person to choose walking over other modes of travel, and the amount of fast food restaurants per population for each county in US. I will be comparing this data with other datasets such as obesity rate and cardiovascular disease mortality rate and try to find out if there is any link between these features and such diseases.
 
 ## The Data That Will Be Used And How To Collect And Use It
-The data I will be using will come from data.gov website. The walkability index dataset is a standalone dataset. The version I will be using is actually cleaned and formed into a proper .csv file by another person. The fast food data  will be extracted from the Food Environment Atlas provided by US Department of Agriculture, Economic Research Service. These comparisons will be made for each county in US. I am then planning to clean and compare the data for each division with each other to be able to determine the level of correlation between them.
+The data I will be using will come from data.gov website. The walkability index dataset is a standalone dataset. The version I will be using is actually cleaned and formed into a proper .csv file by another person. The fast food data  will be extracted from the Food Environment Atlas provided by US Department of Agriculture, Economic Research Service. The heart disease mortality rate data is also collected by the US government and it will be received from the data.gov website. These comparisons will be made for each county in US. I am then planning to clean and compare the data for each division with each other to be able to determine the level of correlation between them.
 The links to the datasets are as follows:
 Walkability Index data: https://github.com/ThePseudician/EPA-Average-Walkability/blob/main/WalkabilityIndexByCounty.csv
 Food Environment Atlas: https://catalog.data.gov/dataset/food-environment-atlas
+
+## Data Analysis
+### Data Sourcing
+Among the data specified above, the following were used (along with the sources where I got them):
+1. Walkabiltiy Index: https://github.com/ThePseudician/EPA-Average-Walkability/blob/main/WalkabilityIndexByCounty.csv
+2. Fast Food Restaurants Per 1000 Population (extracted from the US food environment atlas): https://catalog.data.gov/dataset/food-environment-atlas
+3. Heart Disease Mortality Rate: https://catalog.data.gov/dataset/heart-disease-mortality-data-among-us-adults-35-by-state-territory-and-county-2019-2021
+   
+
