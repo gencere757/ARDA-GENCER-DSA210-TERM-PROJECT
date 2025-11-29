@@ -20,4 +20,5 @@ Among the data specified above, the following were used (along with the sources 
 2. Fast Food Restaurants Per 1000 Population (extracted from the US food environment atlas): https://catalog.data.gov/dataset/food-environment-atlas
 3. Heart Disease Mortality Rate: https://catalog.data.gov/dataset/heart-disease-mortality-data-among-us-adults-35-by-state-territory-and-county-2019-2021
    
-
+### Processing And Cleaning The Data
+Since the data was obtained from public sources, there may be empty or incorrect data. These data were filtered out before going into the EDA steps. For the fast food data, the data was extracted from a much larger dataset (US food environment atlas).
