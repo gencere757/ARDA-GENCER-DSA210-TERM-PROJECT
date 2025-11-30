@@ -64,7 +64,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
   - Fast food restaurants per 1000 people (log-transformed)
 - Included hover information so each map shows, per county, the relevant value along with the other variables for context.
 
-### 4. Hypothesis Testing with Permutation Tests
+### 3.1. Hypothesis Testing with Permutation Tests
 
 - Formally stated hypotheses:
   - **Walkability vs Obesity**  
@@ -81,7 +81,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
   - A negative association between walkability and obesity.
   - A positive association between fast food density and obesity.
 
-### 5. Visualizing Permutation Results
+### 3.2. Visualizing Permutation Results
 
 - Plotted histograms of the permutation-based correlation distributions for each test.
 - Marked the observed correlation on each plot to visually compare it to the null distribution and support the inference from the p-values.
