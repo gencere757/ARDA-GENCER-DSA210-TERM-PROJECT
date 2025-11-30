@@ -41,7 +41,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
 
 ---
 
-## Brief Procedure / What I Did in the Code
+## Brief Procedure / What Was Done In The Code
 
 ### 1. Data Preparation
 
