@@ -103,7 +103,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
 - Plotted a histogram of `Walkability_Index` using Seaborn:
   - Used `sns.histplot` with:
     - 50 bins
-    - Kernel density estimate (`kde=True`)
+    - Kernel density estimate (`kde=True`) (the line above the distribution)
     - Transparency (`alpha=0.6`)
 - Labeled axes and added a title:
   - Title: `"Distribution Of Walkability Index"`.
