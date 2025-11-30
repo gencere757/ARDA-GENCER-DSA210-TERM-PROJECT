@@ -42,7 +42,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
 - Merged all three data sources into one combined dataframe on county FIPS codes.
 - Dropped remaining missing values and saved the processed combined data as `Processed Data.csv`.
 
-### 2. Exploratory Data Analysis and Visualization
+### 2.1 Exploratory Data Analysis and Visualization
 
 - Computed basic descriptive statistics for the combined dataset.
 - Plotted histograms (with optional KDE curves) for:
@@ -55,7 +55,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
   - Fast food (log-transformed) vs obesity rate
 - Calculated a correlation matrix between the main variables and visualized it with a heatmap to summarize pairwise linear/nonlinear associations.
 
-### 3. Geographic Visualizations
+### 2.2 Geographic Visualizations
 
 - Formatted county FIPS codes to 5-digit strings to match the county GeoJSON.
 - Used Plotly choropleth maps to visualize county-level patterns across the USA for:
