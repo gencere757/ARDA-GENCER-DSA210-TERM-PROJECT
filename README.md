@@ -1,5 +1,21 @@
 # ARDA-GENCER-DSA210-TERM-PROJECT
 This is my term project for DSA210 course, in Fall 2025 term.
+
+## Contents
+- [Project Proposal](#project-proposal)
+  - [Motivation](#motivation)
+  - [Plan](#plan)
+  - [The Data That Will Be Used And How To Collect And Use It](#the-data-that-will-be-used-and-how-to-collect-and-use-it)
+- [Data Analysis](#data-analysis)
+  - [Data Sourcing](#data-sourcing)
+  - [Processing And Cleaning The Data](#processing-and-cleaning-the-data)
+- [Brief Procedure / What I Did in the Code](#brief-procedure--what-i-did-in-the-code)
+  - [1. Data Preparation](#1-data-preparation)
+  - [2.1 Exploratory Data Analysis and Visualization](#21-exploratory-data-analysis-and-visualization)
+  - [2.2 Geographic Visualizations](#22-geographic-visualizations)
+  - [3.1. Hypothesis Testing with Permutation Tests](#31-hypothesis-testing-with-permutation-tests)
+  - [3.2. Visualizing Permutation Results](#32-visualizing-permutation-results)
+
 # Project Proposal
 In this project, I will compare the effect of walkability index, a crucial factor when determining how easy it is for a person to be phsically active in their daily lives, and several health problems that is correlated with sedentary lifestyle, such as obesity and cardiovascular diseases. I will also be utilizing the fast food restaurant count per population as an additional feature since nutrition and access to healthy foods also plays an important role in such diseases.
 ## Motivation
