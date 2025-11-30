@@ -25,254 +25,63 @@ Since the data was obtained from public sources, there may be empty or incorrect
 
 ---
 
-## Step-by-Step Procedure (What I Did in the Code)
+## Brief Procedure / What I Did in the Code
 
-### 1. Filtering, Cleaning, and Transforming the Data
+### 1. Data Preparation
 
-#### 1.1 Importing Libraries
-- Imported the main libraries needed for data handling and transformations:
-  - `pandas` as `pd`
-  - `numpy` as `np`
+- Imported core libraries (`pandas`, `numpy`) for data handling.
+- Loaded the Food Environment Atlas dataset:
+  - Filtered it to obtain county-level **adult obesity rates**.
+  - Removed missing or non-positive values to keep only valid observations.
+- Loaded the **Walkability Index** dataset from its CSV file.
+- Extracted the **fast food restaurants per 1000 people** variable from the Food Environment Atlas:
+  - Filtered to the relevant indicator.
+  - Removed zero or invalid values.
+  - Applied a log transform to the fast food variable to reduce skewness.
+- Selected and renamed the key columns (FIPS, walkability index, obesity rate, fast food density) from each dataset.
+- Merged all three data sources into one combined dataframe on county FIPS codes.
+- Dropped remaining missing values and saved the processed combined data as `Processed Data.csv`.
 
-#### 1.2 Preparing the Obesity Rate Data
-- Read the Food Environment Atlas CSV file:
-  - `foodDF = pd.read_csv('StateAndCountyData.csv')`
-- Filtered this dataset to keep only rows related to adult obesity rates:
-  - Selected rows where `Variable_Code == "PCT_OBESE_ADULTS22"` to create `obesityDF`.
-- Cleaned the obesity data:
-  - Dropped rows with missing values using `dropna()`.
-  - Kept only rows where the `Value` (obesity rate) is greater than 0.
-- The result is a cleaned obesity dataframe (`obesityDF`) with valid county-level obesity rate values.
+### 2. Exploratory Data Analysis and Visualization
 
-#### 1.3 Loading the Walkability Index Data
-- Read the walkability index CSV file:
-  - `walkDF = pd.read_csv('WalkabilityIndexByCounty.csv')`
-- This dataframe contains the walkability index for each county, including FIPS codes and walkability scores.
+- Computed basic descriptive statistics for the combined dataset.
+- Plotted histograms (with optional KDE curves) for:
+  - Walkability index
+  - Log-transformed fast food restaurants per 1000 people
+  - Obesity rate  
+  to examine overall distributions and shapes.
+- Created scatterplots to visually inspect relationships between:
+  - Walkability index vs obesity rate
+  - Fast food (log-transformed) vs obesity rate
+- Calculated a correlation matrix between the main variables and visualized it with a heatmap to summarize pairwise linear/nonlinear associations.
 
-#### 1.4 Preparing Fast Food Restaurants per 1000 People
-- Re-used `foodDF` to filter fast food restaurant data:
-  - Selected rows where `Variable_Code == "FFRPTH20"` to focus on **fast food restaurants per 1000 people**.
-- Cleaned the fast food data:
-  - Kept only rows where `Value > 0`.
-- Applied a log transformation to handle right-skewed distribution:
-  - Created a new column `Log_Transformed_Restaurants` using `np.log1p(restaurantDF['Value'])`.
-- This produced a cleaned fast food dataframe (`restaurantDF`) with both raw and log-transformed values.
+### 3. Geographic Visualizations
 
-#### 1.5 Combining All Data into a Single DataFrame
-- Created subset dataframes with only the necessary columns and renamed them for clarity:
+- Formatted county FIPS codes to 5-digit strings to match the county GeoJSON.
+- Used Plotly choropleth maps to visualize county-level patterns across the USA for:
+  - Obesity rates
+  - Walkability index
+  - Fast food restaurants per 1000 people (log-transformed)
+- Included hover information so each map shows, per county, the relevant value along with the other variables for context.
 
-  - **Walkability subset**
-    - Selected `['GEOID10', 'NatWalkInd']` from `walkDF`.
-    - Renamed:
-      - `GEOID10` → `FIPS`
-      - `NatWalkInd` → `Walkability_Index`
-    - Result: `walkSubset`.
+### 4. Hypothesis Testing with Permutation Tests
 
-  - **Fast food subset**
-    - Selected `['FIPS', 'Value', 'Log_Transformed_Restaurants']` from `restaurantDF`.
-    - Renamed:
-      - `Value` → `Fast_Food_Per_1000`
-      - `Log_Transformed_Restaurants` → `Log_Fast_Food`
-    - Result: `restSubset`.
+- Formally stated hypotheses:
+  - **Walkability vs Obesity**  
+    - \(H_0\): No negative correlation between walkability index and obesity rate.  
+    - \(H_a\): Higher walkability is associated with lower obesity (negative correlation).
+  - **Fast Food vs Obesity**  
+    - \(H_0\): No positive correlation between fast food restaurant density and obesity rate.  
+    - \(H_a\): Higher fast food restaurant density is associated with higher obesity (positive correlation).
+- Implemented a custom permutation test using **Spearman correlation**:
+  - Computed the observed correlation between each feature and obesity rate.
+  - Randomly permuted the outcome variable many times to generate a null distribution of correlations.
+  - Calculated one-sided p-values based on where the observed correlation falls relative to the null distribution.
+- Used the results to determine whether there is statistically significant evidence for:
+  - A negative association between walkability and obesity.
+  - A positive association between fast food density and obesity.
 
-  - **Obesity subset**
-    - Selected `['FIPS', 'Value']` from `obesityDF`.
-    - Renamed:
-      - `Value` → `Obesity_Rate`
-    - Result: `obeseSubset`.
+### 5. Visualizing Permutation Results
 
-- Merged the three datasets:
-  - First merged `walkSubset` and `obeseSubset` on `FIPS` using an inner join.
-  - Then merged the result with `restSubset` on `FIPS`, again using an inner join.
-- Dropped any remaining missing values from the combined dataset.
-- Saved the final merged dataset to a CSV file:
-  - `combinedDF.to_csv('Processed Data.csv', index=False)`
-- The final dataframe `combinedDF` contains:
-  - `FIPS`, `Walkability_Index`, `Obesity_Rate`, `Fast_Food_Per_1000`, `Log_Fast_Food`.
-
----
-
-### 2. Data Visualizations
-
-#### 2.1 General Summary and Distribution Plots
-
-##### 2.1.1 Getting Summary Statistics
-- Called `combinedDF.describe()` to get basic descriptive statistics (count, mean, std, min, max, quartiles) for each numeric column.
-
-##### 2.1.2 Histogram of Walkability Index
-- Plotted a histogram of `Walkability_Index` using Seaborn:
-  - Used `sns.histplot` with:
-    - 50 bins
-    - Kernel density estimate (`kde=True`) (the line above the distribution)
-    - Transparency (`alpha=0.6`)
-- Labeled axes and added a title:
-  - Title: `"Distribution Of Walkability Index"`.
-
-##### 2.1.3 Histogram of Fast Food Restaurants (Log Transformed)
-- Plotted a histogram of `Log_Fast_Food`:
-  - Used `sns.histplot` with:
-    - 50 bins
-    - `kde=True`
-    - `alpha=0.6`
-- Labeled the x-axis to indicate that the values are log-transformed fast food restaurants per 1000 people.
-- Title: `"Distribution Of Fast Food Restaurants Per 1000 Population"`.
-
-##### 2.1.4 Histogram of Obesity Rate
-- Plotted a histogram of `Obesity_Rate`:
-  - Used `sns.histplot` with:
-    - 20 bins
-    - `kde=True`
-    - `alpha=0.6`
-- Title: `"Distribution Of Obesity Rate"`.
-
-#### 2.1.5 Scatterplots: Features vs Obesity Rate
-
-- **Walkability Index vs Obesity Rate**
-  - Plotted a scatterplot with:
-    - x-axis: `Walkability_Index`
-    - y-axis: `Obesity_Rate`
-    - `alpha=0.25` for semi-transparent points.
-  - Title: `"Obesity Rate vs Walkability Index"`.
-
-- **Fast Food (Log) vs Obesity Rate**
-  - Plotted a scatterplot with:
-    - x-axis: `Log_Fast_Food`
-    - y-axis: `Obesity_Rate`
-    - `alpha=0.25`.
-  - Title: `"Obesity Rate vs Number Of Fast Food Restaurants Per 1000 People"`.
-
-These scatterplots were used to visually inspect potential relationships between the features and obesity rate.
-
-#### 2.1.6 Correlation Matrix
-- Computed pairwise correlations between:
-  - `Walkability_Index`
-  - `Log_Fast_Food`
-  - `Obesity_Rate`
-- Created a heatmap using `sns.heatmap`:
-  - Displayed correlation values (`annot=True`).
-  - Used a `"coolwarm"` colormap.
-- Title: `"Correlation Matrix"`.
-
----
-
-### 2.2 Mapping the Data on a US County Map
-
-#### 2.2.1 Importing Mapping Libraries
-- Imported:
-  - `plotly.express` as `px`
-  - `plotly.graph_objects` as `go`
-
-#### 2.2.2 Preparing FIPS Codes
-- Ensured that the `FIPS` column is correctly formatted as a 5-character string with leading zeros:
-  - `combinedDF['FIPS'] = combinedDF['FIPS'].astype(str).str.zfill(5)`
-
-#### 2.2.3 Choropleth Map of Obesity Rate
-- Created an interactive choropleth map of `Obesity_Rate` by county:
-  - Used `px.choropleth` with:
-    - `geojson` of US counties from Plotly’s GitHub.
-    - `locations='FIPS'`
-    - `color='Obesity_Rate'` (Reds color scale).
-    - `scope="usa"`.
-  - Included hover data:
-    - `Obesity_Rate`, `Walkability_Index`, `Fast_Food_Per_1000`.
-  - Labeled and titled the map:
-    - Title: `"US County-Level Data Visualization For Obesity Rates"`.
-- Adjusted layout:
-  - Set white lake color and margins.
-  - Fixed figure height.
-
-#### 2.2.4 Choropleth Map of Walkability Index
-- Re-used the formatted `FIPS` column.
-- Created a choropleth map for `Walkability_Index` using the same US counties geojson.
-- Color scale based on `Walkability_Index` with a `"Reds"` scale.
-- Hover data displayed:
-  - `Obesity_Rate`, `Walkability_Index`, `Fast_Food_Per_1000`.
-- Title: `"US County-Level Data Visualization For Walkability Index"`.
-
-#### 2.2.5 Choropleth Map of Fast Food Restaurants (Log Transformed)
-- Again ensured properly formatted `FIPS`.
-- Created a choropleth map for `Log_Fast_Food` (fast food restaurants per 1000 people, log transformed).
-- Used the same geojson and `"Reds"` scale.
-- Hover data included:
-  - `Obesity_Rate`, `Walkability_Index`, `Fast_Food_Per_1000`.
-- Title: `"US County-Level Data Visualization For Fast Food Restaurant Per 1000 Population"`.
-
----
-
-### 3. Hypothesis Testing
-
-#### 3.1 Defining Hypotheses and Testing Approach
-
-- Defined two main hypotheses:
-
-  1. **Walkability Index**
-     - Null hypothesis \(H_0\): Walkability index and obesity rate are **not negatively** correlated.
-     - Alternative hypothesis \(H_a\): Walkability index and obesity rate are **negatively** correlated (higher walkability → lower obesity).
-
-  2. **Fast Food Restaurants per 1000 People**
-     - Null hypothesis \(H_0\): Fast food restaurant density and obesity rate are **not positively** correlated.
-     - Alternative hypothesis \(H_a\): Fast food restaurant density and obesity rate are **positively** correlated.
-
-- Chose **permutation testing** with **Spearman correlation**:
-  - Used Spearman because obesity data did not look normally distributed (non-parametric).
-
-#### 3.2 Permutation Test Function
-
-- Implemented a custom permutation test function:
-
-  - `permutation_test_correlation(x, y, n_permutations=10000, alternative='two-sided')`:
-    - Converts the inputs to NumPy arrays.
-    - Computes the **observed Spearman correlation** between `x` and `y`.
-    - Generates `n_permutations` random permutations of `y` and computes the Spearman correlation for each permutation.
-    - Based on the `alternative` hypothesis:
-      - `'two-sided'`: counts how many permuted correlations have absolute value ≥ |observed|.
-      - `'less'`: counts how many permuted correlations are ≤ observed (for testing negative correlations).
-      - `'greater'`: counts how many permuted correlations are ≥ observed (for testing positive correlations).
-    - Computes a Monte Carlo–adjusted p-value:
-      - `p_value = (extreme + 1) / (n_permutations + 1)`
-    - Returns:
-      - Observed correlation
-      - p-value
-      - The full distribution of permuted correlations.
-
-#### 3.3 Applying the Permutation Test
-
-- **Walkability vs Obesity Rate**
-  - Called `permutation_test_correlation` with:
-    - `x = combinedDF['Walkability_Index']`
-    - `y = combinedDF['Obesity_Rate']`
-    - `n_permutations = 10000`
-    - `alternative = 'less'` (testing for negative correlation).
-  - Printed:
-    - Observed correlation.
-    - One-sided p-value.
-    - An interpretation stating whether the result is significant at α = 0.05 and if there is evidence of a negative correlation.
-
-- **Fast Food (Log) vs Obesity Rate**
-  - Called `permutation_test_correlation` with:
-    - `x = combinedDF['Log_Fast_Food']`
-    - `y = combinedDF['Obesity_Rate']`
-    - `n_permutations = 10000`
-    - `alternative = 'greater'` (testing for positive correlation).
-  - Printed:
-    - Observed correlation.
-    - One-sided p-value.
-    - Interpretation stating whether the result is significant at α = 0.05 and if there is evidence of a positive correlation.
-
----
-
-### 3.4 Visualizing the Permutation Distributions
-
-- Plotted histograms of the permutation distributions for both tests:
-
-  - **Walkability vs Obesity Rate**
-    - Used `sns.histplot` to plot the distribution of `perm_dist_walkability`.
-    - Added a vertical red dashed line at the observed correlation value.
-    - Title: `"Permutation Test - Walkability Index vs. Obesity Rate"`.
-
-  - **Fast Food vs Obesity Rate**
-    - Used `sns.histplot` for `perm_dist_food`.
-    - Added a vertical red dashed line at the observed correlation value.
-    - Title: `"Permutation Test - Walkability Index vs. Obesity Rate"` (same title string in the code, even though this second plot is for fast food vs obesity).
-
-- These plots were used to visually compare the observed correlations against the permutation-based null distributions and to support the hypothesis test conclusions.
+- Plotted histograms of the permutation-based correlation distributions for each test.
+- Marked the observed correlation on each plot to visually compare it to the null distribution and support the inference from the p-values.
