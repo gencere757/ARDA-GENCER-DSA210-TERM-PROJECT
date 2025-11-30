@@ -61,7 +61,7 @@ Since the data was obtained from public sources, there may be empty or incorrect
 ### 2.1 Exploratory Data Analysis and Visualization
 
 - Computed basic descriptive statistics for the combined dataset.
-- Plotted histograms (with optional KDE curves) for:
+- Plotted histograms (with optional KDE curves (to get an approximate curve for guessing the distribution of the data)) for:
   - Walkability index
   - Log-transformed fast food restaurants per 1000 people
   - Obesity rate  
