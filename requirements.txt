@@ -5,3 +5,5 @@ seaborn
 plotly.express
 plotly.graph_objects
 scipy.stats
+statsmodels.api
+sklearn
