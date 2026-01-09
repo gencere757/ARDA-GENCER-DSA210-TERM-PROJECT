@@ -6,4 +6,12 @@ plotly.express
 plotly.graph_objects
 scipy.stats
 statsmodels.api
-sklearn
+sklearn.model_selection
+sklearn.pipeline 
+sklearn.preprocessing 
+sklearn.linear_model 
+sklearn.ensemble
+sklearn.neighbors 
+sklearn.tree 
+sklearn.metrics
+
