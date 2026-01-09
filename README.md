@@ -102,11 +102,11 @@ Since the data was obtained from public sources, there may be empty or incorrect
 - Plotted histograms of the permutation-based correlation distributions for each test.
 - Marked the observed correlation on each plot to visually compare it to the null distribution and support the inference from the p-values.
 
-#4. Machine Learning Analysis
-##4.1. Multicollinearity Check (VIF)
+# 4. Machine Learning Analysis
+## 4.1. Multicollinearity Check (VIF)
 Before modeling, I calculated the Variance Inflation Factor (VIF) for the predictors (Walkability_Index and Log_Fast_Food).
 This was done to ensure that the independent variables were not too highly correlated with each other, which could undermine the statistical significance of the regression coefficients.
-##4.2. Model Selection and Pipeline Construction
+## 4.2. Model Selection and Pipeline Construction
 Implemented a robust machine learning pipeline using scikit-learn that included:
 StandardScaler: To normalize features, ensuring that the different scales of walkability and fast food density did not bias the models (especially important for KNN and Linear Regression).
 Predictive Models: Evaluated four different algorithms:
@@ -114,12 +114,12 @@ Linear Regression: As a baseline parametric model.
 K-Nearest Neighbors (KNN): To capture local non-linear patterns.
 Decision Tree Regressor: To model non-linear relationships through recursive partitioning.
 Random Forest Regressor: An ensemble method to improve generalization and reduce variance.
-##4.3. Nested Cross-Validation and Hyperparameter Tuning
+## 4.3. Nested Cross-Validation and Hyperparameter Tuning
 Used a Nested Cross-Validation strategy to provide an unbiased estimate of model performance:
 Outer Loop (10-fold K-Fold): Used to evaluate the generalizability of the models.
 Inner Loop (10-fold K-Fold with GridSearchCV): Used to tune hyperparameters for each model (e.g., n_neighbors for KNN, max_depth for Trees/Forests).
 This approach ensures that the hyperparameter tuning process does not "leak" information into the final performance evaluation.
-##4.4. Evaluation and Visualization
+## 4.4. Evaluation and Visualization
 Evaluated each model using R² (Coefficient of Determination) and RMSE (Root Mean Squared Error).
 Created a 2x2 grid of scatterplots comparing Actual vs. Predicted obesity rates for all four models.
 Included an "Ideal Fit" (
