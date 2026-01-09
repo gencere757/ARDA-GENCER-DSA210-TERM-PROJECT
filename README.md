@@ -15,11 +15,11 @@ This is my term project for DSA210 course, in Fall 2025 term.
   - [2.2 Geographic Visualizations](#22-geographic-visualizations)
   - [3.1. Hypothesis Testing with Permutation Tests](#31-hypothesis-testing-with-permutation-tests)
   - [3.2. Visualizing Permutation Results](#32-visualizing-permutation-results)
-  - [4. Machine Learning Analysis]
-  - [4.1. Multicollinearity Check (VIF)]
-  - [4.2. Model Selection and Pipeline Construction]
-  - [4.3. Nested Cross-Validation and Hyperparameter Tuning]
-  - [4.4. Evaluation and Visualization]
+  - [4. Machine Learning Analysis](#4-machine-learning-analysis)
+  - [4.1. Multicollinearity Check (VIF)](#41-multicollinearity-check-vif)
+  - [4.2. Model Selection and Pipeline Construction](#42-model-selection-and-pipeline-construction)
+  - [4.3. Nested Cross-Validation and Hyperparameter Tuning](#43-nested-cross-validation-and-hyperparameter-tuning)
+  - [4.4. Evaluation and Visualization](#44-evaluation-and-visualization)
 
 # Project Proposal
 In this project, I will compare the effect of walkability index, a crucial factor when determining how easy it is for a person to be phsically active in their daily lives, and several health problems that is correlated with sedentary lifestyle, such as obesity and cardiovascular diseases. I will also be utilizing the fast food restaurant count per population as an additional feature since nutrition and access to healthy foods also plays an important role in such diseases.
